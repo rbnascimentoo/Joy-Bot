@@ -1,0 +1,15 @@
+# Dependências
+node_modules/
+
+# Arquivos de build e produção
+/dist
+/build
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Configurações de Editores
+.vscode/
+.idea/
