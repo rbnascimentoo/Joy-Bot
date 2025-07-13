@@ -118,6 +118,6 @@ export default async function handler(request, response) {
     return response.status(200).json({ reply: botReply });
   } catch (error) {
     console.error(`Erro ao chamar a API do provedor ${provider}:`, error.message);
-    return response.status(500).json({ error: error.message });
+    return response.status(500).json({ error: `Falha ao obter resposta da IA: ${error.message}`});
   }
 }

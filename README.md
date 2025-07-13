@@ -27,21 +27,29 @@ Para executar este projeto localmente, você precisará de uma plataforma que su
     cd <nome-do-repositorio>
     ```
 
-2.  **Crie o arquivo de ambiente:**
+2.  **Instale a Vercel CLI:**
+    Se você ainda não tiver a Vercel CLI instalada, execute o seguinte comando no seu terminal (você precisa ter o Node.js instalado):
+    ```bash
+    npm install -g vercel
+    ```
+
+3.  **Crie o arquivo de ambiente:**
     Crie um arquivo chamado `.env` na raiz do projeto e adicione suas chaves de API:
     ```
     # Chave da API do Google AI Studio
     GEMINI_API_KEY="sua-chave-aqui"
 
+    ou
+
     # Chave da API da OpenAI
     OPENAI_API_KEY="sua-chave-aqui"
     ```
 
-3.  **Execute o projeto com a CLI da Vercel:**
+4.  **Execute o projeto com a CLI da Vercel:**
     ```bash
     vercel dev
     ```
-    Isso iniciará um servidor de desenvolvimento local que executa o front-end e a função de API.
+    Isso iniciará um servidor de desenvolvimento local que executa o front-end e a função de API. Acesse o endereço fornecido (geralmente `http://localhost:3000`).
 
 ## 🔮 Próximos Passos
 

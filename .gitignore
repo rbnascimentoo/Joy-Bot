@@ -16,4 +16,5 @@ yarn-error.log*
 
 # Arquivos de variáveis de ambiente
 .env
-.vercel
+.vercel/
+
