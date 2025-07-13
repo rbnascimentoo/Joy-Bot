@@ -62,6 +62,12 @@ header img {
     width: 88px;
 }
 
+header .subtitle {
+    font-size: 14px;
+    color: #A8A8B3;
+    margin-top: 8px;
+}
+
 /* --- NOVO: Estilo para o seletor de IA --- */
 .select-ai {
     margin-top: 24px;

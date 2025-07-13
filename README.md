@@ -1,6 +1,6 @@
 # 🤖 Joy-Bot
 
-Bem-vindo ao Joy-Bot, seu assistente pessoal de IA para o universo dos games! Este projeto é uma interface de chat desenvolvida para ajudar jogadores de todos os níveis com dicas, truques, estratégias e informações sobre qualquer jogo.
+Bem-vindo ao Joy-Bot, seu assistente pessoal de IA para o universo dos games! Este projeto é uma interface de chat desenvolvida para ajudar jogadores de todos os níveis com dicas, truques, estratégias e informações sobre qualquer jogo de videogame, de qualquer plataforma (PC, PlayStation, Xbox, Nintendo, mobile, etc.).
 
 ## ✨ Funcionalidades
 
