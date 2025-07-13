@@ -5,28 +5,45 @@ Bem-vindo ao Joy-Bot, seu assistente pessoal de IA para o universo dos games! Es
 ## ✨ Funcionalidades
 
 -   **Interface de Chat Clean e Moderna**: Um layout com tema escuro, focado na usabilidade e agradável para longas sessões de consulta.
--   **Interação Dinâmica**: Envie suas perguntas e receba respostas simuladas do assistente.
+-   **Interação Dinâmica com IA**: Envie suas perguntas e receba respostas reais de um modelo de linguagem.
+-   **Seleção de Provedor**: Permite escolher dinamicamente entre diferentes provedores de IA (Google Gemini ou OpenAI).
 -   **Animações Suaves**: Efeitos de entrada na tela e para novas mensagens, criando uma experiência mais fluida.
 -   **Foco em Acessibilidade**: Estrutura semântica e elementos de interface claros para todos os usuários.
 
 ## 🛠️ Tecnologias Utilizadas
 
-O front-end deste projeto foi construído com as seguintes tecnologias:
-
 -   **HTML5**: Para a estrutura semântica e o conteúdo da página.
 -   **CSS3**: Para a estilização, layout (Flexbox/Grid), animações e design da interface.
 -   **JavaScript (Vanilla)**: Para a interatividade, manipulação do DOM e lógica do chat.
+-   **Node.js (Serverless Function)**: Para criar um back-end seguro que protege as chaves de API e se comunica com os provedores de IA.
 
-## 🏃‍♀️ Como Executar o Projeto
+## ⚙️ Configuração e Execução
 
-1.  **Clone o repositório** (se estiver no GitHub) ou simplesmente salve os arquivos em uma pasta local.
-2.  **Abra o arquivo `index.html`** no seu navegador de preferência.
+Para executar este projeto localmente, você precisará de uma plataforma que suporte funções serverless, como a CLI da Vercel.
 
-E pronto! Você já pode interagir com a interface do Joy-Bot.
+1.  **Clone o repositório:**
+    ```bash
+    git clone <url-do-repositorio>
+    cd <nome-do-repositorio>
+    ```
+
+2.  **Crie o arquivo de ambiente:**
+    Crie um arquivo chamado `.env` na raiz do projeto e adicione suas chaves de API:
+    ```
+    # Chave da API do Google AI Studio
+    GEMINI_API_KEY="sua-chave-aqui"
+
+    # Chave da API da OpenAI
+    OPENAI_API_KEY="sua-chave-aqui"
+    ```
+
+3.  **Execute o projeto com a CLI da Vercel:**
+    ```bash
+    vercel dev
+    ```
+    Isso iniciará um servidor de desenvolvimento local que executa o front-end e a função de API.
 
 ## 🔮 Próximos Passos
 
--   [ ] Integrar com uma API de Inteligência Artificial para gerar as respostas.
--   [ ] Adicionar um indicador de "digitando..." para o bot.
--   [ ] Tornar o layout totalmente responsivo para dispositivos móveis.
 -   [ ] Implementar um histórico de conversas (usando `localStorage`).
+-   [ ] Adicionar efeito de *streaming* na resposta do bot.

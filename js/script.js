@@ -2,6 +2,13 @@
 const form = document.getElementById('input-form');
 const input = document.getElementById('chat-input');
 const chat = document.getElementById('chat');
+const aiProviderSelect = document.getElementById('ai-provider');
+
+// Converte texto Markdown para HTML simples
+const markdownToHtml = (text) => {
+    const converter = new showdown.Converter();
+    return converter.makeHtml(text);
+}
 
 // Função para rolar o chat para o final
 function scrollToBottom() {
@@ -15,34 +22,85 @@ function addMessage(sender, text) {
 
     const textElement = document.createElement('div');
     textElement.classList.add('text');
-    textElement.textContent = text;
+
+    if (sender === 'bot') {
+        // Para o bot, converte Markdown para HTML. É seguro pois o conteúdo vem do servidor.
+        textElement.innerHTML = markdownToHtml(text);
+    } else {
+        // Para o usuário, usa textContent para evitar injeção de HTML (XSS).
+        textElement.textContent = text;
+    }
 
     messageElement.appendChild(textElement);
     chat.appendChild(messageElement);
 
     scrollToBottom();
 }
+// --- Indicador de "digitando..." ---
+const typingIndicator = document.createElement('div');
+typingIndicator.classList.add('message', 'bot', 'typing-indicator');
+typingIndicator.innerHTML = `
+    <div class="text">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+`;
+
+function showTypingIndicator() {
+    chat.appendChild(typingIndicator);
+    scrollToBottom();
+}
+
+function hideTypingIndicator() {
+    if (chat.contains(typingIndicator)) {
+        chat.removeChild(typingIndicator);
+    }
+}
 
 // Lida com o envio do formulário
-form.addEventListener('submit', (event) => {
+form.addEventListener('submit', async (event) => {
     event.preventDefault(); // Impede o recarregamento da página
 
     const userMessage = input.value.trim();
+    const selectedProvider = aiProviderSelect.value;
 
     if (userMessage) {
         // Adiciona a mensagem do usuário à interface
         addMessage('user', userMessage);
 
-        // Limpa o campo de texto
         input.value = '';
         input.style.height = 'auto'; // Reseta a altura do textarea
 
-        // Simula a resposta do bot após um pequeno atraso
-        setTimeout(() => {
-            // Resposta padrão (aqui integrara a IA)
-            const botResponse = "Obrigado por perguntar! No momento, estou aprendendo. Em breve, poderei dar dicas sobre " + userMessage.split(' ').pop() + ".";
-            addMessage('bot', botResponse);
-        }, 1200); // Atraso de 1.2 segundos
+        // Mostra o indicador de "digitando..."
+        showTypingIndicator();
+
+        try {
+            // Chama API segura no back-end
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    message: userMessage,
+                    provider: selectedProvider // Envia o provedor selecionado
+                }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            addMessage('bot', data.reply);
+        } catch (error) {
+            console.error("Erro ao contatar a API:", error);
+            addMessage('bot', `Ops! Algo deu errado, tente novamente mais tarde.`);
+        } finally {
+            hideTypingIndicator();
+        }
     }
 });
 
@@ -60,9 +118,9 @@ window.addEventListener('load', () => {
 });
 
 // Desabilita o clique com o botão direito do mouse
-document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
-});
+// document.addEventListener('contextmenu', function(event) {
+//     event.preventDefault();
+// });
 
 // Desabilita atalhos de teclado comuns para abrir as ferramentas de desenvolvedor
 document.addEventListener('keydown', function(event) {

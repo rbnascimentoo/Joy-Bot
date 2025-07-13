@@ -62,6 +62,32 @@ header img {
     width: 88px;
 }
 
+/* --- NOVO: Estilo para o seletor de IA --- */
+.select-ai {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.select-ai select {
+    background-color: var(--surface-color-secondary);
+    border: 1px solid #323238;
+    color: var(--text-color);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: var(--font-family);
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.select-ai select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
 /* Área do Chat */
 #chat {
     flex: 1;
@@ -185,6 +211,31 @@ header img {
     height: 24px;
 }
 
+/* Estilos para o Indicador de "Digitando..." */
+.typing-indicator .text {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 18px; /* Ajusta o padding para os pontos */
+}
+
+.typing-indicator span {
+    width: 8px;
+    height: 8px;
+    background-color: var(--text-color);
+    border-radius: 50%;
+    opacity: 0.4;
+    animation: typingBounce 1.2s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
 /* Animações de Apresentação */
 @keyframes fadeInDown {
     from {
@@ -194,6 +245,15 @@ header img {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes typingBounce {
+    0%, 60%, 100% {
+        transform: translateY(0);
+    }
+    30% {
+        transform: translateY(-6px);
     }
 }
 
@@ -217,5 +277,34 @@ header img {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* --- Responsividade para Dispositivos Móveis --- */
+@media (max-width: 768px) {
+    body {
+        /* Remove a centralização para que o app ocupe a tela toda */
+        display: block;
+    }
+
+    #app {
+        max-width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        border: none;
+        padding: 24px 16px;
+        box-shadow: none;
+    }
+
+    header {
+        padding-bottom: 24px;
+    }
+
+    #chat {
+        padding-right: 0; /* Remove o padding extra da barra de rolagem */
+    }
+
+    .message .text {
+        max-width: 90%; /* Permite que as mensagens ocupem mais espaço */
     }
 }

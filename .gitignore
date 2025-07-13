@@ -13,3 +13,7 @@ yarn-error.log*
 # Configurações de Editores
 .vscode/
 .idea/
+
+# Arquivos de variáveis de ambiente
+.env
+.vercel
