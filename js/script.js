@@ -105,6 +105,10 @@ form.addEventListener('submit', async (event) => {
         showTypingIndicator();
 
         try {
+
+            // Pega as últimas 10 mensagens do histórico para enviar como contexto
+            const historyForApi = chatHistory.slice(0, -1).slice(-10);
+
             // Chama API segura no back-end
             const response = await fetch('/api/chat', {
                 method: 'POST',
@@ -113,7 +117,8 @@ form.addEventListener('submit', async (event) => {
                 },
                 body: JSON.stringify({ 
                     message: userMessage,
-                    provider: selectedProvider // Envia o provedor selecionado
+                    provider: selectedProvider, // Envia o provedor selecionado,
+                    history: historyForApi // Envia o histórico da conversa
                 }),
             });
 
@@ -141,6 +146,7 @@ input.addEventListener('input', () => {
 
 // Adiciona uma mensagem de boas-vindas do bot ao carregar
 window.addEventListener('load', () => {
+    // Tenta carregar o histórico. Se não houver, exibe a mensagem de boas-vindas.
     if (!loadHistory()) {
         setTimeout(() => {
             addMessage('bot', 'Olá! 👋 Sou o Joy-Bot. Sobre qual jogo você gostaria de dicas hoje?');
@@ -149,9 +155,9 @@ window.addEventListener('load', () => {
 });
 
 // Desabilita o clique com o botão direito do mouse
-// document.addEventListener('contextmenu', function(event) {
-//     event.preventDefault();
-// });
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
 
 // Desabilita atalhos de teclado comuns para abrir as ferramentas de desenvolvedor
 document.addEventListener('keydown', function(event) {
