@@ -4,6 +4,29 @@ const input = document.getElementById('chat-input');
 const chat = document.getElementById('chat');
 const aiProviderSelect = document.getElementById('ai-provider');
 
+// --- Gerenciamento do Histórico ---
+let chatHistory = [];
+
+function saveHistory() {
+    // Salva o array do histórico no localStorage como uma string JSON
+    localStorage.setItem('joy-bot-history', JSON.stringify(chatHistory));
+}
+
+function loadHistory() {
+    const savedHistory = localStorage.getItem('joy-bot-history');
+    if (savedHistory) {
+        chatHistory = JSON.parse(savedHistory);
+        // Limpa o chat antes de carregar o histórico para evitar duplicatas
+        chat.innerHTML = '';
+        chatHistory.forEach(message => {
+            // O terceiro parâmetro 'false' impede que a mensagem seja salva novamente no histórico
+            addMessage(message.sender, message.text, false);
+        });
+        return true; // Indica que o histórico foi carregado
+    }
+    return false; // Nenhum histórico encontrado
+}
+
 // Converte texto Markdown para HTML simples
 const markdownToHtml = (text) => {
     const converter = new showdown.Converter();
@@ -16,7 +39,7 @@ function scrollToBottom() {
 }
 
 // Função para adicionar uma mensagem ao chat
-function addMessage(sender, text) {
+function addMessage(sender, text, save = true) {
     const messageElement = document.createElement('div');
     messageElement.classList.add('message', sender); // 'user' ou 'bot'
 
@@ -35,6 +58,12 @@ function addMessage(sender, text) {
     chat.appendChild(messageElement);
 
     scrollToBottom();
+
+    // Salva a mensagem no histórico se 'save' for true (o padrão)
+    if (save) {
+        chatHistory.push({ sender, text });
+        saveHistory();
+    }
 }
 // --- Indicador de "digitando..." ---
 const typingIndicator = document.createElement('div');
@@ -112,9 +141,11 @@ input.addEventListener('input', () => {
 
 // Adiciona uma mensagem de boas-vindas do bot ao carregar
 window.addEventListener('load', () => {
-    setTimeout(() => {
-        addMessage('bot', 'Olá! 👋 Sou o Joy-Bot. Sobre qual jogo você gostaria de dicas hoje?');
-    }, 1000); // Atraso para aparecer depois da animação inicial
+    if (!loadHistory()) {
+        setTimeout(() => {
+            addMessage('bot', 'Olá! 👋 Sou o Joy-Bot. Sobre qual jogo você gostaria de dicas hoje?');
+        }, 1000); // Atraso para aparecer depois da animação inicial
+    }
 });
 
 // Desabilita o clique com o botão direito do mouse

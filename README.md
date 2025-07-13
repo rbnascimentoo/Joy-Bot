@@ -45,5 +45,4 @@ Para executar este projeto localmente, você precisará de uma plataforma que su
 
 ## 🔮 Próximos Passos
 
--   [ ] Implementar um histórico de conversas (usando `localStorage`).
 -   [ ] Adicionar efeito de *streaming* na resposta do bot.
